@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quality Life Report - Cartagena</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        
+        <style>
+            body,h1,h2,h3,h4,h5,h6 {
+                font-family: "Lato", sans-serif
+            }
+            .navbar-brand,.nav-item {
+                padding: 8px;
+            }
+            .jumbotron {
+                padding-top: 120px;
+                padding-bottom: 220px;
+                background: url(https://i.ibb.co/542bcFK/demografia.png);
+                background-size: 100% 100%;
+                background-repeat:no-repeat;
+            }
+            @media all and (min-width: 400px) and (max-width: 1000px)
+            {  
+                .jumbotron {
+                    background-size: 100% 60%;
+                }
+            }
+        </style>
+    </head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 fixed-top">
+        <a class="navbar-brand" href="{%url 'home'%}">
+            <img src="https://cdn-icons-png.flaticon.com/512/3187/3187594.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Quality Life Report
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'home'%}">Inicio</a>
+                </li>
+                <li class="nav-item active bg-white">
+                    <a class="nav-link text-dark" href="#">Demograf&iacute;a</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'poverty'%}">Pobreza</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'education'%}">Educaci&oacute;n</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'safety'%}">Seguridad</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'mobility'%}">Movilidad</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1></h1>
+        <p></p>
+    </div>
+
+    <!-- Table 'Indice de Juventud' -->
+    <div class="container">
+        <h2>&Iacute;ndice de Juventud</h2>
+        <h5>
+            En Cartagena, el 25,6% de la población tiene entre 15 y 29 años, es decir,
+            1 de cada cuatro cartageneros. Al comparar las principales ciudades
+            capitales, <b>Cartagena tiene el Índice de Juventud más alto.</b>
+        </h5>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>AÑO</th>
+                        <th>CIUDAD</th>
+                        <th>&Iacute;NDICE DE HOMBRES (%)</th>
+                        <th>&Iacute;NDICE DE MUJERES (%)</th>
+                    </tr>
+                </thead>
+                {% for y in youth_index %}
+                    <tr>
+                        <td>{{y.youth_index_id}}</td>
+                        <td>{{y.year}}</td>
+                        <td>{{y.city}}</td>
+                        <td>{{y.men_index}}</td>
+                        <td>{{y.women_index}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-12 p-4"></div>
+
+    <!-- Table 'Indice de Envejecimiento' -->
+    <div class="container">
+        <h2>&Iacute;ndice de Envejecimiento</h2>
+        <h5>
+            Cartagena es la ciudad con menor nivel de envejecimiento de las
+            principales capitales del país, <b>por cada 100 menores de 15 años 
+            hay 35 mayores de 65 años.</b>
+        </h5>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>AÑO</th>
+                        <th>CIUDAD</th>
+                        <th>&Iacute;NDICE DE HOMBRES (%)</th>
+                        <th>&Iacute;NDICE DE MUJERES (%)</th>
+                    </tr>
+                </thead>
+                {% for a in aging_index %}
+                    <tr>
+                        <td>{{a.aging_index_id}}</td>
+                        <td>{{a.year}}</td>
+                        <td>{{a.city}}</td>
+                        <td>{{a.men_index}}</td>
+                        <td>{{a.women_index}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-12 p-4"></div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small bg-dark">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 text-white">© 2022 Copyright |
+            <a class="text-white" href="">Emily Vanegas & Andr&eacute;s Torres</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Life Report - Cartagena</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {
+            font-family: "Lato", sans-serif
+        }
+        .navbar-brand,.nav-item {
+            padding: 8px;
+        }
+        .jumbotron {
+            padding-top: 120px;
+            padding-bottom: 150px;
+            background: url(http://www.cartagenacomovamos.org/nuevo/wp-content/uploads/2022/08/Descarga-resultados-ICV-Desaf%C3%ADos-ayer-y-hoy-04.jpg);
+            background-size: 100% 100%;
+            background-repeat:no-repeat;
+        }
+        @media all and (min-width: 400px) and (max-width: 1000px)
+        {  
+            .jumbotron {
+                background-size: 100% 60%;
+            }
+            .row {
+                padding: 50px;
+            }
+        }
+        @media all and (min-width: 1000px) 
+        {  
+            .row {
+            padding-top: 100px;
+            padding-bottom: 100px;
+            padding-left: 200px;
+            padding-right: 200px;
+            } 
+            .github_link {
+                padding-left: 500px;
+            }
+        }
+        p {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 fixed-top">
+        <a class="navbar-brand" href="{%url 'home'%}">
+            <img src="https://cdn-icons-png.flaticon.com/512/3187/3187594.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Quality Life Report
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active bg-white">
+                    <a class="nav-link text-dark" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'demography'%}">Demograf&iacute;a</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'poverty'%}">Pobreza</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'education'%}">Educaci&oacute;n</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'safety'%}">Seguridad</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'mobility'%}">Movilidad</a>
+                </li>
+                <li class="nav-item github_link">
+                    <a class="nav-link" target="_blank" href="">
+                        <img src="https://cdn.icon-icons.com/icons2/2429/PNG/512/github_logo_icon_147285.png" width="30" height="30" alt="">
+                        View in GitHub
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1></h1>
+        <p></p>
+    </div>
+
+    <!-- Grid -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-x-12">
+                <h1>Demograf&iacute;a</h1>
+                <p class="p-2 text-muted">La demografía es una ciencia que estudia estadísticamente las poblaciones humanas; su dimensión, estructura, evolución y características generales, ​ así como los procesos concretos que determinan su formación, conservación y desaparición.</p>
+                <p class="p-2">El Distrito de Cartagena de Indias tiene una población de 1.013.38924 habitantes, cuenta con una extensión de 623 Km2, de los cuales el 76 Km2 son de suelo urbano, 547 Km de suelo rural, La población localizada en la zona urbana es del 95,6% mientras en la zona rural es de 4.4%.</p>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <img src="https://lp-cms-production.imgix.net/features/2013/01/Cartagena_Colombia_cs-b9a2c77a9fe3.jpg" height="300" width="450" alt="Demografia">
+            </div>
+
+            <div class="col-md-12 p-4"></div>
+
+            <div class="col-md-6 col-xs-12">
+                <h1>Pobreza</h1>
+                <p class="p-2 text-muted">La pobreza es una situación en la cual no es posible satisfacer las necesidades físicas y psicológicas básicas de una persona.</p>
+                <p class="p-2">La línea de pobreza monetaria per cápita en Cartagena para 2020 fue $360.187; en el caso de un hogar de cuatro personas fue $1.440. 748. </p>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <img src="https://images.canal1.com.co/wp-content/uploads/2021/06/04220113/pobreza.jpg" height="300" width="450" alt="Pobreza">
+            </div>
+
+            <div class="col-md-12 p-4"></div>
+
+            <div class="col-md-6 col-xs-12">
+                <h1>Educaci&oacute;n</h1>
+                <p class="p-2 text-muted">Formación destinada a desarrollar la capacidad intelectual, moral y afectiva de las personas.</p>
+                <p class="p-2">En Cartagena sigue costando mantener a los estudiantes dentro del sistema educativo, los niveles
+                    educativos con mayor deserción son preescolar y secundaria con más del 4% de estudiantes que no terminó
+                    el año escolar. Además, en grado 11 un 51% de los reprobados no regresó a estudiar, manteniendo la tasa de
+                    no retorno más alta, seguida de preescolar.</p>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <img src="https://www.eluniversal.com.co/sites/default/files/201604/colegio_cartagena.jpg" height="300" width="450" alt="Educacion">
+            </div>
+
+            <div class="col-md-12 p-4"></div>
+
+            <div class="col-md-6 col-xs-12">
+                <h1>Seguridad</h1>
+                <p class="p-2 text-muted">Seguridad cotidianamente se puede referir a la ausencia de riesgo o a la confianza en algo.</p>
+                <p class="p-2">La seguridad en Cartagena ha mantenido las alertas encendidas, a pesar de la pandemia los casos de
+                    muertes violentas han aumentado año a año, llegando a más de 460 casos en 2021. Este panorama
+                    continua crítico en 2022, entre enero y junio se ya se presentaron 316 casos, 40% más que en el mismo
+                    periodo de 2021.</p>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <img src="https://www.eltiempo.com/files/article_main/uploads/2019/09/16/5d7f7fcb45038.jpeg" height="300" width="450" alt="Seguridad">
+            </div>
+
+            <div class="col-md-12 p-4"></div>
+
+            <div class="col-md-6 col-xs-12">
+                <h1>Movilidad</h1>
+                <p class="p-2 text-muted">Por movilidad se entiende el conjunto de desplazamientos, de personas y mercancías, que se producen en un entorno físico.</p>
+                <p class="p-2">La Encuesta de Percepción Ciudadana de 2019 indicó que en Cartagena el principal modo de transporte de los habitantes son los buses y busetas tradicionales, con un 27% participación. Les sigue Transcaribe con un 23% y las motos con un 16%.</p>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <img src="https://www.eluniversal.com.co/binrepository/1200x676/0c0/0d0/none/13704/WASF/1a958035-a81f-40e5-a90f-fa994aaf5e43_2451140_20191204124755.jpg" height="300" width="450" alt="Movilidad">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small bg-dark">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 text-white">© 2022 Copyright |
+            <a class="text-white" href="">Emily Vanegas & Andr&eacute;s Torres</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>
