@@ -95,7 +95,7 @@
         </h5>
         <br>
         <div class="row">
-            <div class="col-md-12 col-xs-12">
+            <div class="col-md-6 col-xs-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -103,8 +103,8 @@
                                 <th>ID</th>
                                 <th>AÑO</th>
                                 <th>NIVEL EDUCATIVO</th>
-                                <th>TIPO DE MATR&Iacute;CULA</th>
-                                <th>CANTIDAD DE MATR&Iacute;CULAS</th>
+                                <th>CANTIDAD DE MATR&Iacute;CULAS OFICIALES</th>
+                                <th>CANTIDAD DE MATR&Iacute;CULAS PRIVADAS</th>
                             </tr>
                         </thead>
                         {% for e in enrollment %}
@@ -112,14 +112,14 @@
                                 <td>{{e.enrollment_id}}</td>
                                 <td>{{e.year}}</td>
                                 <td>{{e.get_educational_level_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
-                                <td>{{e.get_type_enrollment_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
-                                <td>{{e.amount_enrollment}}</td>
+                                <td>{{e.amount_enrollment_official}}</td>
+                                <td>{{e.amount_enrollment_private}}</td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12">
+            <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarMatriculaEscolar"></canvas>
             </div>
         </div>
@@ -182,51 +182,50 @@
 
 <script>
     $(document).ready(function(){
-        // graficarMatriculaEscolar();
+        graficarMatriculaEscolar();
         graficarTasaDesercion();
     });
 
-    /* function graficarMatriculaEscolar(){
+    function graficarMatriculaEscolar(){
         var ctxBarMatriculaEscolar = document.getElementById('chartBarMatriculaEscolar').getContext('2d');
         var chartBarMatriculaEscolar = new Chart(ctxBarMatriculaEscolar, {
             type: 'bar',
             data: {
                 labels: [{%for data in enrollment%}'{{data.get_educational_level_display}}',{%endfor%}],
                 datasets: [{
-                    label: 'Matricula',
-                    data: [{%for data in enrollment%}{% if data.get_type_enrollment_display == 'Matricula Oficial' %}'{{amount_enrollment}}',{%endif%}{%endfor%}],
+                  label: 'Matricula Oficial',
+                    data: [{%for data in enrollment%}{{data.amount_enrollment_official}},{%endfor%}],
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
+                    'rgba(255, 99, 132, 0.2)'
                     ],
                     borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
+                    'rgb(255, 99, 132)'
+                    ],
+                    borderWidth: 1
+                },
+                {
+                  label: 'Matricula Privada',
+                    data: [{%for data in enrollment%}{{data.amount_enrollment_private}},{%endfor%}],
+                    backgroundColor: [
+                    'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 159, 64)'
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
                 plugins:{
-                    legend: {display: false},
+                    // legend: {display: false},
                     title: {
                         display: true,
-                        text: "Matricula Escolar en Cartagena"
+                        text: "Matrícula Escolar en Cartagena"
                     }
                 }
             }
         });
-    } */
+    }
 
     function graficarTasaDesercion(){
         var ctxBarTasaDesercion = document.getElementById('chartBarTasaDesercion').getContext('2d');

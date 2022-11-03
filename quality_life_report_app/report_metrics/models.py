@@ -44,10 +44,6 @@ class ExtremeMonetaryPoverty(models.Model):
 
 # MATRICULA ESCOLAR POR NIVEL EDUCATIVO
 class SchoolEnrollment(models.Model):
-    TYPES = (
-        ('MO', 'Matricula Oficial'),
-        ('MP', 'Matricula Privada')
-    )
     LEVELS = (
         ('m-prees', 'Preescolar'),
         ('m-bapri', 'Basica Primaria'),
@@ -57,8 +53,8 @@ class SchoolEnrollment(models.Model):
     enrollment_id = models.PositiveIntegerField(primary_key='true')
     year = models.IntegerField()
     educational_level = models.CharField(max_length=256, choices=LEVELS)
-    type_enrollment = models.CharField(max_length=256, choices=TYPES)
-    amount_enrollment = models.IntegerField()
+    amount_enrollment_official = models.IntegerField()
+    amount_enrollment_private = models.IntegerField()
 
 # TASA DE DESERCION
 class DesertionRate(models.Model):
@@ -99,24 +95,16 @@ class FamilyViolence(models.Model):
 
 # MATRICULA VEHICULAR
 class VehicleRegistration(models.Model):
-    TYPES = (
-        ('t-auto', 'Automovil'),
-        ('t-moto', 'Motocicleta'),
-        ('t-otro', 'Otros')
-    )
     vehicule_registration_id = models.PositiveIntegerField(primary_key='true')
     year = models.IntegerField()
-    vehicule_type = models.CharField(max_length=256, choices=TYPES)
-    vehicule_registration_index = models.IntegerField()
+    auto_index = models.IntegerField()
+    moto_index = models.IntegerField()
+    others_index = models.IntegerField()
 
 # COMPARENDOS
 class VehicleViolation(models.Model):
-    TYPES = (
-        ('t-auto', 'Automovil'),
-        ('t-moto', 'Motocicleta'),
-        ('t-otro', 'Otros')
-    )
     vehicule_violation_id = models.PositiveIntegerField(primary_key='true')
     year = models.IntegerField()
-    vehicule_type = models.CharField(max_length=256, choices=TYPES)
-    vehicule_violation_index = models.IntegerField()
+    auto_index = models.IntegerField()
+    moto_index = models.IntegerField()
+    others_index = models.IntegerField()
