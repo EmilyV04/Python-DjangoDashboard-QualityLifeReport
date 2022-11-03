@@ -7,7 +7,9 @@
         <title>Quality Life Report - Cartagena</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-        
+        <!--CHART.JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
         <style>
             body,h1,h2,h3,h4,h5,h6 {
                 font-family: "Lato", sans-serif
@@ -92,27 +94,34 @@
             no corregir a tiempo las fallas se traducirá en retos más grandes en el futuro.
         </h5>
         <br>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>AÑO</th>
-                        <th>NIVEL EDUCATIVO</th>
-                        <th>TIPO DE MATR&Iacute;CULA</th>
-                        <th>CANTIDAD DE MATR&Iacute;CULAS</th>
-                    </tr>
-                </thead>
-                {% for e in enrollment %}
-                    <tr>
-                        <td>{{e.enrollment_id}}</td>
-                        <td>{{e.year}}</td>
-                        <td>{{e.get_educational_level_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
-                        <td>{{e.get_type_enrollment_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
-                        <td>{{e.amount_enrollment}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>AÑO</th>
+                                <th>NIVEL EDUCATIVO</th>
+                                <th>TIPO DE MATR&Iacute;CULA</th>
+                                <th>CANTIDAD DE MATR&Iacute;CULAS</th>
+                            </tr>
+                        </thead>
+                        {% for e in enrollment %}
+                            <tr>
+                                <td>{{e.enrollment_id}}</td>
+                                <td>{{e.year}}</td>
+                                <td>{{e.get_educational_level_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
+                                <td>{{e.get_type_enrollment_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
+                                <td>{{e.amount_enrollment}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <canvas id="chartBarMatriculaEscolar"></canvas>
+            </div>
         </div>
     </div>
 
@@ -127,25 +136,32 @@
             terminó el año escolar.
         </h5>
         <br>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>AÑO</th>
-                        <th>NIVEL EDUCATIVO</th>
-                        <th>&Iacute;NDICE DE DESERCI&Oacute;N (%)</th>
-                    </tr>
-                </thead>
-                {% for d in desertion %}
-                    <tr>
-                        <td>{{d.desertion_id}}</td>
-                        <td>{{d.year}}</td>
-                        <td>{{d.get_educational_level_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
-                        <td>{{d.desertion_index}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>AÑO</th>
+                                <th>NIVEL EDUCATIVO</th>
+                                <th>&Iacute;NDICE DE DESERCI&Oacute;N (%)</th>
+                            </tr>
+                        </thead>
+                        {% for d in desertion %}
+                            <tr>
+                                <td>{{d.desertion_id}}</td>
+                                <td>{{d.year}}</td>
+                                <td>{{d.get_educational_level_display}}</td> <!-- PARA MOSTRAR LABEL DE 'CHOICES' USAR get_NOMBREDELCAMPO_display -->
+                                <td>{{d.desertion_index}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <canvas id="chartBarTasaDesercion"></canvas>
+            </div>
         </div>
     </div>
 
@@ -163,3 +179,95 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        // graficarMatriculaEscolar();
+        graficarTasaDesercion();
+    });
+
+    /* function graficarMatriculaEscolar(){
+        var ctxBarMatriculaEscolar = document.getElementById('chartBarMatriculaEscolar').getContext('2d');
+        var chartBarMatriculaEscolar = new Chart(ctxBarMatriculaEscolar, {
+            type: 'bar',
+            data: {
+                labels: [{%for data in enrollment%}'{{data.get_educational_level_display}}',{%endfor%}],
+                datasets: [{
+                    label: 'Matricula',
+                    data: [{%for data in enrollment%}{% if data.get_type_enrollment_display == 'Matricula Oficial' %}'{{amount_enrollment}}',{%endif%}{%endfor%}],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins:{
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Matricula Escolar en Cartagena"
+                    }
+                }
+            }
+        });
+    } */
+
+    function graficarTasaDesercion(){
+        var ctxBarTasaDesercion = document.getElementById('chartBarTasaDesercion').getContext('2d');
+        var chartBarTasaDesercion = new Chart(ctxBarTasaDesercion, {
+            type: 'bar',
+            data: {
+                labels: [{%for data in desertion%}'{{data.get_educational_level_display}}',{%endfor%}],
+                datasets: [{
+                  label: 'Indice de Deserción (%)',
+                    data: [{%for data in desertion%}{{data.desertion_index}},{%endfor%}],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins:{
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Tasa de Deserción en Cartagena"
+                    }
+                }
+            }
+        });
+    }
+
+</script>

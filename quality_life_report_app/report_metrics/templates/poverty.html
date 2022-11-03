@@ -7,7 +7,9 @@
         <title>Quality Life Report - Cartagena</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-        
+        <!--CHART.JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
         <style>
             body,h1,h2,h3,h4,h5,h6 {
                 font-family: "Lato", sans-serif
@@ -92,25 +94,32 @@
             Colombia, <b>aún hay 77.482 nuevos pobres que dejó la pandemia.</b>
         </h5>
         <br>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>AÑO</th>
-                        <th>CIUDAD</th>
-                        <th>&Iacute;NDICE DE POBREZA (%)</th>
-                    </tr>
-                </thead>
-                {% for pm in monetary_poverty %}
-                    <tr>
-                        <td>{{pm.monetary_poverty_id}}</td>
-                        <td>{{pm.year}}</td>
-                        <td>{{pm.city}}</td>
-                        <td>{{pm.poverty_index}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>AÑO</th>
+                                <th>CIUDAD</th>
+                                <th>&Iacute;NDICE DE POBREZA (%)</th>
+                            </tr>
+                        </thead>
+                        {% for pm in monetary_poverty %}
+                            <tr>
+                                <td>{{pm.monetary_poverty_id}}</td>
+                                <td>{{pm.year}}</td>
+                                <td>{{pm.city}}</td>
+                                <td>{{pm.poverty_index}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <canvas id="chartBarPobrezaMonetaria"></canvas>
+            </div>
         </div>
     </div>
 
@@ -124,25 +133,32 @@
             capitales. <b>La pobreza extrema es el doble comparada con antes de pandemia.</b>
         </h5>
         <br>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>AÑO</th>
-                        <th>CIUDAD</th>
-                        <th>&Iacute;NDICE DE POBREZA (%)</th>
-                    </tr>
-                </thead>
-                {% for pme in extreme_monetary_poverty %}
-                    <tr>
-                        <td>{{pme.extreme_monetary_poverty_id}}</td>
-                        <td>{{pme.year}}</td>
-                        <td>{{pme.city}}</td>
-                        <td>{{pme.poverty_index}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>AÑO</th>
+                                <th>CIUDAD</th>
+                                <th>&Iacute;NDICE DE POBREZA (%)</th>
+                            </tr>
+                        </thead>
+                        {% for pme in extreme_monetary_poverty %}
+                            <tr>
+                                <td>{{pme.extreme_monetary_poverty_id}}</td>
+                                <td>{{pme.year}}</td>
+                                <td>{{pme.city}}</td>
+                                <td>{{pme.poverty_index}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <canvas id="chartBarPobrezaMonetariaExtrema"></canvas>
+            </div>
         </div>
     </div>
 
@@ -160,3 +176,95 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        graficarPobrezaMonetaria();
+        graficarPobrezaMonetariaExtrema();
+    });
+
+    function graficarPobrezaMonetaria(){
+        var ctxBarPobrezaMonetaria = document.getElementById('chartBarPobrezaMonetaria').getContext('2d');
+        var chartBarPobrezaMonetaria = new Chart(ctxBarPobrezaMonetaria, {
+            type: 'bar',
+            data: {
+                labels: [{%for data in monetary_poverty%}'{{data.city}}',{%endfor%}],
+                datasets: [{
+                    label: 'Indice de Pobreza (%)',
+                    data: [{%for data in monetary_poverty%}{{data.poverty_index}},{%endfor%}],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins:{
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Incidencia de Pobreza Monetaria"
+                    }
+                }
+            }
+        });
+    }
+
+    function graficarPobrezaMonetariaExtrema(){
+        var ctxBarPobrezaMonetariaExtrema = document.getElementById('chartBarPobrezaMonetariaExtrema').getContext('2d');
+        var chartBarPobrezaMonetariaExtrema = new Chart(ctxBarPobrezaMonetariaExtrema, {
+            type: 'bar',
+            data: {
+                labels: [{%for data in extreme_monetary_poverty%}'{{data.city}}',{%endfor%}],
+                datasets: [{
+                  label: 'Indice de Pobreza (%)',
+                    data: [{%for data in extreme_monetary_poverty%}{{data.poverty_index}},{%endfor%}],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins:{
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Incidencia de Pobreza Monetaria Extrema"
+                    }
+                }
+            }
+        });
+    }
+
+</script>
