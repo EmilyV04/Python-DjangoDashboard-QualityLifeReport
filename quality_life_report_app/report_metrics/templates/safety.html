@@ -107,6 +107,7 @@
                                 <th>&Iacute;NDICE DE MUERTES ACCIDENTALES (%)</th>
                                 <th>&Iacute;NDICE DE MUERTES EN ACCIDENTES DE TRANSPORTE (%)</th>
                                 <th>&Iacute;NDICE DE HOMICIDIOS (%)</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for v in violent_death %}
@@ -118,13 +119,131 @@
                                 <td>{{v.accidental_deaths_index}}</td>
                                 <td>{{v.deaths_transportation_accidents_index}}</td>
                                 <td>{{v.homicidies_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_death_view/{{ v.violent_death_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_death/{{ v.violent_death_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal1')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarMuertesViolentas"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_death" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_death" id="id_death" value="{{violent_death.violent_death_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio" id="anio" value="{{violent_death.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Casos de Muertes Violentas</label>
+                            <input class="form-control" type="number" name="amount" id="amount" value="{{violent_death.violent_death_amount}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Suicidios (%)</label>
+                            <input class="form-control" type="number" name="suicide" id="suicide" value="{{violent_death.suicide_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Muertes Accidentales (%)</label>
+                            <input class="form-control" type="number" name="accident" id="accident" value="{{violent_death.accidental_deaths_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Muertes en Accidentes de Transporte (%)</label>
+                            <input class="form-control" type="number" name="transp" id="transp" value="{{violent_death.deaths_transportation_accidents_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Homicidios (%)</label>
+                            <input class="form-control" type="number" name="homicide" id="homicide" value="{{violent_death.homicidies_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/safety">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_death" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{eviolent_death.violent_death_id}}</label>
+                            <input type="hidden" name="modal_death_edit" id="modal_death_edit" value="{{modal_death_value}}">
+                            <input class="form-control" type="hidden" name="eid_death" id="eid_death" value="{{eviolent_death.violent_death_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio" id="eanio" value="{{eviolent_death.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Casos de Muertes Violentas</label>
+                            <input class="form-control" type="number" name="eamount" id="eamount" value="{{eviolent_death.violent_death_amount}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Suicidios (%)</label>
+                            <input class="form-control" type="number" name="esuicide" id="seuicide" value="{{eviolent_death.suicide_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Muertes Accidentales (%)</label>
+                            <input class="form-control" type="number" name="eaccident" id="eaccident" value="{{eviolent_death.accidental_deaths_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Muertes en Accidentes de Transporte (%)</label>
+                            <input class="form-control" type="number" name="etransp" id="etransp" value="{{eviolent_death.deaths_transportation_accidents_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Homicidios (%)</label>
+                            <input class="form-control" type="number" name="ehomicide" id="ehomicide" value="{{eviolent_death.homicidies_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/safety">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -152,6 +271,7 @@
                                 <th>VIOLENCIA CONTRA NIÑOS, NIÑAS Y ADOLESCENTES</th>
                                 <th>VIOLENCIA ENTRE OTROS FAMILIARES</th>
                                 <th>VIOLENCIA DE PAREJA</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for f in family_violence %}
@@ -163,13 +283,131 @@
                                 <td>{{f.children_teens_index}}</td>
                                 <td>{{f.family_members_index}}</td>
                                 <td>{{f.partner_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_family_view/{{ f.family_violence_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_family/{{ f.family_violence_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal2')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarViolenciaIntrafamiliar"></canvas>
+            </div>
+        </div>
+    </div>
+        
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_family" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_family" id="id_family" value="{{family_violence.family_violence_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_fam" id="anio_fam" value="{{family_violence.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Casos de Violencia Intrafamiliar</label>
+                            <input class="form-control" type="number" name="amount_fam" id="amount_fam" value="{{family_violence.family_violence_amount}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Contra el Adulto Mayor</label>
+                            <input class="form-control" type="number" name="adult" id="adult" value="{{family_violence.older_adult_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Niños, Niñas y Adolescentes</label>
+                            <input class="form-control" type="number" name="child" id="child" value="{{family_violence.children_teens_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Entre Otros Familiares</label>
+                            <input class="form-control" type="number" name="fami" id="fami" value="{{family_violence.family_members_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Entre Parejas</label>
+                            <input class="form-control" type="number" name="pareja" id="pareja" value="{{family_violence.partner_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal2-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/safety">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_family" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{efamily_violence.family_violence_id}}</label>
+                            <input type="hidden" name="modal_family_edit" id="modal_family_edit" value="{{modal_family_value}}">
+                            <input class="form-control" type="hidden" name="eid_family" id="eid_family" value="{{efamily_violence.family_violence_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_fam" id="eanio_fam" value="{{efamily_violence.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Casos de Violencia Intrafamiliar</label>
+                            <input class="form-control" type="number" name="eamount_fam" id="eamount_fam" value="{{efamily_violence.family_violence_amount}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Contra el Adulto Mayor</label>
+                            <input class="form-control" type="number" name="eadult" id="eadult" value="{{efamily_violence.older_adult_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Niños, Niñas y Adolescentes</label>
+                            <input class="form-control" type="number" name="echild" id="echild" value="{{efamily_violence.children_teens_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Entre Otros Familiares</label>
+                            <input class="form-control" type="number" name="efami" id="efami" value="{{efamily_violence.family_members_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Entre Parejas</label>
+                            <input class="form-control" type="number" name="epareja" id="epareja" value="{{efamily_violence.partner_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/safety">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -193,7 +431,38 @@
     $(document).ready(function(){
         graficarMuertesViolentas();
         graficarViolenciaIntrafamiliar();
+
+        if($('#modal_death_edit').val() == 1) {
+            $('#myModal1-1').modal({backdrop: 'static', keyboard: false})
+
+        } else if($('#modal_family_edit').val() == 1) {
+            $('#myModal2-1').modal({backdrop: 'static', keyboard: false})
+
+        }else{
+            $('#myModal1-1').modal("hide");
+            $('#myModal2-1').modal("hide");
+        }
     });
+
+    function openModal(id) {
+        $('#id_death').val('');
+        $('#anio').val('');
+        $('#amount').val('');
+        $('#suicide').val('');
+        $('#accident').val('');
+        $('#transp').val('');
+        $('#homicide').val('');
+
+        $('#id_family').val('');
+        $('#anio_fam').val('');
+        $('#amount_fam').val('');
+        $('#adult').val('');
+        $('#child').val('');
+        $('#fami').val('');
+        $('#pareja').val('');
+
+        $(id).modal("show");
+    }
 
     function graficarMuertesViolentas(){
         var ctxBarMuertesViolentas = document.getElementById('chartBarMuertesViolentas').getContext('2d');

@@ -106,6 +106,7 @@
                                 <th>CANTIDAD DE MATR&Iacute;CULAS AUTOM&Oacute;VILES</th>
                                 <th>CANTIDAD DE MATR&Iacute;CULAS MOTOCICLETAS</th>
                                 <th>CANTIDAD DE MATR&Iacute;CULAS OTROS</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for r in vehicule_registration %}
@@ -115,13 +116,115 @@
                                 <td>{{r.auto_index}}</td>
                                 <td>{{r.moto_index}}</td>
                                 <td>{{r.others_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_matricula_view/{{ r.vehicule_registration_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_matricula/{{ r.vehicule_registration_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal1')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarMatriculas"></canvas>
+            </div>
+        </div>
+    </div>
+        
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_matricula" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_matri" id="id_matri" value="{{vehicule_registration.vehicule_registration_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_matri" id="anio_matri" value="{{vehicule_registration.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Automóviles</label>
+                            <input class="form-control" type="number" name="auto_matri" id="auto_matri" value="{{vehicule_registration.auto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Motocicletas</label>
+                            <input class="form-control" type="number" name="moto_matri" id="moto_matri" value="{{vehicule_registration.moto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Otros</label>
+                            <input class="form-control" type="number" name="other_matri" id="other_matri" value="{{vehicule_registration.others_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/mobility">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_matricula" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{evehicule_registration.vehicule_registration_id}}</label>
+                            <input type="hidden" name="modal_matricula_edit" id="modal_matricula_edit" value="{{modal_matricula_value}}">
+                            <input class="form-control" type="hidden" name="eid_matri" id="eid_matri" value="{{evehicule_registration.vehicule_registration_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_matri" id="eanio_matri" value="{{evehicule_registration.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Automóviles</label>
+                            <input class="form-control" type="number" name="eauto_matri" id="eauto_matri" value="{{evehicule_registration.auto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Motocicletas</label>
+                            <input class="form-control" type="number" name="emoto_matri" id="emoto_matri" value="{{evehicule_registration.moto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Matriculas Otros</label>
+                            <input class="form-control" type="number" name="eother_matri" id="eother_matri" value="{{evehicule_registration.others_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/mobility">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -147,6 +250,7 @@
                                 <th>CANTIDAD DE COMPARENDOS AUTOM&Oacute;VILES</th>
                                 <th>CANTIDAD DE COMPARENDOS MOTOCICLETAS</th>
                                 <th>CANTIDAD DE COMPARENDOS OTROS</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for v in vehicule_violation %}
@@ -156,13 +260,115 @@
                                 <td>{{v.auto_index}}</td>
                                 <td>{{v.moto_index}}</td>
                                 <td>{{v.others_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_comparendo_view/{{ v.vehicule_violation_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_comparendo/{{ v.vehicule_violation_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal2')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarComparendos"></canvas>
+            </div>
+        </div>
+    </div>
+            
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_comparendo" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_compa" id="id_compa" value="{{vehicule_violation.vehicule_violation_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_compa" id="anio_compa" value="{{vehicule_violation.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Automóviles</label>
+                            <input class="form-control" type="number" name="auto_compa" id="auto_compa" value="{{vehicule_violation.auto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Motocicletas</label>
+                            <input class="form-control" type="number" name="moto_compa" id="moto_compa" value="{{vehicule_violation.moto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Otros</label>
+                            <input class="form-control" type="number" name="other_compa" id="other_compa" value="{{vehicule_violation.others_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal2-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/mobility">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_comparendo" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{evehicule_violation.vehicule_violation_id}}</label>
+                            <input type="hidden" name="modal_comparendo_edit" id="modal_comparendo_edit" value="{{modal_comparendo_value}}">
+                            <input class="form-control" type="hidden" name="eid_compa" id="eid_compa" value="{{evehicule_violation.vehicule_violation_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_compa" id="eanio_compa" value="{{evehicule_violation.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Automóviles</label>
+                            <input class="form-control" type="number" name="eauto_compa" id="eauto_compa" value="{{evehicule_violation.auto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Motocicletas</label>
+                            <input class="form-control" type="number" name="emoto_compa" id="emoto_compa" value="{{evehicule_violation.moto_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Comparendos Otros</label>
+                            <input class="form-control" type="number" name="eother_compa" id="eother_compa" value="{{evehicule_violation.others_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/mobility">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -186,7 +392,34 @@
     $(document).ready(function(){
         graficarMatriculas();
         graficarComparendos();
+
+        if($('#modal_matricula_edit').val() == 1) {
+            $('#myModal1-1').modal({backdrop: 'static', keyboard: false})
+
+        } else if($('#modal_comparendo_edit').val() == 1) {
+            $('#myModal2-1').modal({backdrop: 'static', keyboard: false})
+
+        }else{
+            $('#myModal1-1').modal("hide");
+            $('#myModal2-1').modal("hide");
+        }
     });
+
+    function openModal(id) {
+        $('#id_matri').val('');
+        $('#anio_matri').val('');
+        $('#auto_matri').val('');
+        $('#moto_matri').val('');
+        $('#other_matri').val('');
+
+        $('#id_compa').val('');
+        $('#anio_compa').val('');
+        $('#auto_compa').val('');
+        $('#moto_compa').val('');
+        $('#other_compa').val('');
+
+        $(id).modal("show");
+    }
 
     function graficarMatriculas(){
         var ctxBarMatriculas = document.getElementById('chartBarMatriculas').getContext('2d');

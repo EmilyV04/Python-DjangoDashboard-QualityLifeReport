@@ -104,6 +104,7 @@
                                 <th>AÑO</th>
                                 <th>CIUDAD</th>
                                 <th>&Iacute;NDICE DE POBREZA (%)</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for pm in monetary_poverty %}
@@ -112,13 +113,107 @@
                                 <td>{{pm.year}}</td>
                                 <td>{{pm.city}}</td>
                                 <td>{{pm.poverty_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_pomo_view/{{ pm.monetary_poverty_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_pomo/{{ pm.monetary_poverty_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal1')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarPobrezaMonetaria"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_pomo" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_pomo" id="id_pomo" value="{{monetary_poverty.monetary_poverty_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_pomo" id="anio_pomo" value="{{monetary_poverty.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="ciudad_pomo" id="ciudad_pomo" value="{{monetary_poverty.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Pobreza (%)</label>
+                            <input class="form-control" type="number" name="ind_pover_pomo" id="ind_pover_pomo" value="{{monetary_poverty.poverty_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/poverty">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_pomo" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{emonetary_poverty.monetary_poverty_id}}</label>
+                            <input type="hidden" name="modal_pomo_edit" id="modal_pomo_edit" value="{{modal_pomo_value}}">
+                            <input class="form-control" type="hidden" name="eid_pomo" id="eid_pomo" value="{{emonetary_poverty.monetary_poverty_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_pomo" id="eanio_pomo" value="{{emonetary_poverty.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="eciudad_pomo" id="eciudad_pomo" value="{{emonetary_poverty.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Pobreza (%)</label>
+                            <input class="form-control" type="number" name="eind_pover_pomo" id="eind_pover_pomo" value="{{emonetary_poverty.poverty_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/poverty">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -143,6 +238,7 @@
                                 <th>AÑO</th>
                                 <th>CIUDAD</th>
                                 <th>&Iacute;NDICE DE POBREZA (%)</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for pme in extreme_monetary_poverty %}
@@ -151,13 +247,107 @@
                                 <td>{{pme.year}}</td>
                                 <td>{{pme.city}}</td>
                                 <td>{{pme.poverty_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_pomoex_view/{{ pme.extreme_monetary_poverty_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_pomoex/{{ pme.extreme_monetary_poverty_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal2')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarPobrezaMonetariaExtrema"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_pomoex" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_pomoex" id="id_pomoex" value="{{extreme_monetary_poverty.extreme_monetary_poverty_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_pomoex" id="anio_pomoex" value="{{extreme_monetary_poverty.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="ciudad_pomoex" id="ciudad_pomoex" value="{{extreme_monetary_poverty.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Pobreza (%)</label>
+                            <input class="form-control" type="number" name="ind_pover_pomoex" id="ind_pover_pomoex" value="{{extreme_monetary_poverty.poverty_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal2-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/poverty">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_pomoex" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{eextreme_monetary_poverty.extreme_monetary_poverty_id}}</label>
+                            <input type="hidden" name="modal_pomoex_edit" id="modal_pomoex_edit" value="{{modal_pomoex_value}}">
+                            <input class="form-control" type="hidden" name="eid_pomoex" id="eid_pomoex" value="{{eextreme_monetary_poverty.extreme_monetary_poverty_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_pomoex" id="eanio_pomoex" value="{{eextreme_monetary_poverty.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="eciudad_pomoex" id="eciudad_pomoex" value="{{eextreme_monetary_poverty.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Pobreza (%)</label>
+                            <input class="form-control" type="number" name="eind_pover_pomoex" id="eind_pover_pomoex" value="{{eextreme_monetary_poverty.poverty_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/poverty">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -181,7 +371,32 @@
     $(document).ready(function(){
         graficarPobrezaMonetaria();
         graficarPobrezaMonetariaExtrema();
+
+        if($('#modal_pomo_edit').val() == 1) {
+            $('#myModal1-1').modal({backdrop: 'static', keyboard: false})
+
+        } else if($('#modal_pomoex_edit').val() == 1) {
+            $('#myModal2-1').modal({backdrop: 'static', keyboard: false})
+
+        }else{
+            $('#myModal1-1').modal("hide");
+            $('#myModal2-1').modal("hide");
+        }
     });
+
+    function openModal(id) {
+        $('#id_pomo').val('');
+        $('#anio_pomo').val('');
+        $('#ciudad_pomo').val('');
+        $('#ind_pover_pomo').val('');
+
+        $('#id_pomoex').val('');
+        $('#anio_pomoex').val('');
+        $('#ciudad_pomoex').val('');
+        $('#ind_pover_pomoex').val('');
+
+        $(id).modal("show");
+    }
 
     function graficarPobrezaMonetaria(){
         var ctxBarPobrezaMonetaria = document.getElementById('chartBarPobrezaMonetaria').getContext('2d');

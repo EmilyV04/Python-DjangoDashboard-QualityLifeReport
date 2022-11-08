@@ -105,6 +105,7 @@
                                 <th>CIUDAD</th>
                                 <th>&Iacute;NDICE DE HOMBRES (%)</th>
                                 <th>&Iacute;NDICE DE MUJERES (%)</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for y in youth_index %}
@@ -114,13 +115,115 @@
                                 <td>{{y.city}}</td>
                                 <td>{{y.men_index}}</td>
                                 <td>{{y.women_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_youth_view/{{ y.youth_index_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_youth/{{ y.youth_index_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal1')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarIndiceJuventud"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_youth" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_juventud" id="id_juventud" value="{{youth_index.youth_index_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio" id="anio" value="{{youth_index.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="ciudad" id="ciudad" value="{{youth_index.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Hombres (%)</label>
+                            <input class="form-control" type="number" name="ind_hom" id="ind_hom" value="{{youth_index.men_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Mujeres (%)</label>
+                            <input class="form-control" type="number" name="ind_muj" id="ind_muj" value="{{youth_index.women_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal1-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/demography">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_youth" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{eyouth_index.youth_index_id}}</label>
+                            <input type="hidden" name="modal_youth_edit" id="modal_youth_edit" value="{{modal_youth_value}}">
+                            <input class="form-control" type="hidden" name="eid_juventud" id="eid_juventud" value="{{eyouth_index.youth_index_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio" id="eanio" value="{{eyouth_index.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="eciudad" id="eciudad" value="{{eyouth_index.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Hombres (%)</label>
+                            <input class="form-control" type="number" name="eind_hom" id="eind_hom" value="{{eyouth_index.men_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Mujeres (%)</label>
+                            <input class="form-control" type="number" name="eind_muj" id="eind_muj" value="{{eyouth_index.women_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/demography">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -147,6 +250,7 @@
                                 <th>CIUDAD</th>
                                 <th>&Iacute;NDICE DE HOMBRES (%)</th>
                                 <th>&Iacute;NDICE DE MUJERES (%)</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         {% for a in aging_index %}
@@ -156,13 +260,115 @@
                                 <td>{{a.city}}</td>
                                 <td>{{a.men_index}}</td>
                                 <td>{{a.women_index}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn-xs btn-success" href="/edit_aging_view/{{ a.aging_index_id }}">
+                                        <i class="fa fa-pencil ml-2" aria-hidden="true"></i> <span class="mr-2">Edit</span>
+                                      </a>
+                                      <a class="btn-xs btn-danger" href="/delete_aging/{{ a.aging_index_id }}">
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"></i> <span class="mr-2">Delete</span>
+                                      </a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
+                <button type="button" class="btn btn-primary" onclick="openModal('#myModal2')">
+                    Agregar
+                </button>
             </div>
             <div class="col-md-6 col-xs-12">
                 <canvas id="chartBarIndiceEnvejecimiento"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/create_aging" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID</label>
+                            <input class="form-control" type="number" name="id_env" id="id_env" value="{{aging_index.aging_index_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="anio_env" id="anio_env" value="{{aging_index.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="ciudad_env" id="ciudad_env" value="{{aging_index.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Hombres (%)</label>
+                            <input class="form-control" type="number" name="ind_hom_env" id="ind_hom_env" value="{{aging_index.men_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Mujeres (%)</label>
+                            <input class="form-control" type="number" name="ind_muj_env" id="ind_muj_env" value="{{aging_index.women_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal2-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar registro</h4>
+                    <a class="close" href="/demography">&times;</a>
+                </div>
+            
+                <div class="modal-body">
+                    <form action="/edit_aging" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <label for="">ID - {{eaging_index.aging_index_id}}</label>
+                            <input type="hidden" name="modal_aging_edit" id="modal_aging_edit" value="{{modal_aging_value}}">
+                            <input class="form-control" type="hidden" name="eid_env" id="eid_env" value="{{eaging_index.aging_index_id}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Año</label>
+                            <input class="form-control" type="number" name="eanio_env" id="eanio_env" value="{{eaging_index.year}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Ciudad</label>
+                            <input class="form-control" type="text" name="eciudad_env" id="eciudad_env" value="{{eaging_index.city}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Hombres (%)</label>
+                            <input class="form-control" type="number" name="eind_hom_env" id="eind_hom_env" value="{{eaging_index.men_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="">Indice de Mujeres (%)</label>
+                            <input class="form-control" type="number" name="eind_muj_env" id="eind_muj_env" value="{{eaging_index.women_index}}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/demography">Close</a>
+                </div>
             </div>
         </div>
     </div>
@@ -186,7 +392,34 @@
     $(document).ready(function(){
         graficarIndiceJuventud();
         graficarIndiceEnvejecimiento();
+
+        if($('#modal_youth_edit').val() == 1) {
+            $('#myModal1-1').modal({backdrop: 'static', keyboard: false})
+
+        } else if($('#modal_aging_edit').val() == 1) {
+            $('#myModal2-1').modal({backdrop: 'static', keyboard: false})
+
+        }else{
+            $('#myModal1-1').modal("hide");
+            $('#myModal2-1').modal("hide");
+        }
     });
+
+    function openModal(id) {
+        $('#id_juventud').val('');
+        $('#anio').val('');
+        $('#ciudad').val('');
+        $('#ind_hom').val('');
+        $('#ind_muj').val('');
+
+        $('#id_env').val('');
+        $('#anio_env').val('');
+        $('#ciudad_env').val('');
+        $('#ind_hom_env').val('');
+        $('#ind_muj_env').val('');
+
+        $(id).modal("show");
+    }
 
     function graficarIndiceJuventud() {
 
